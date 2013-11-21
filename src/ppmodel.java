@@ -84,7 +84,11 @@ public class PPModel extends SimActor{
 		{
 			System.out.println("PPModel::runSimulation: TIME STEP: " + currentTime);
 			
-			//for(int currentActor =);
+			for(int currentActorIndex = 0; currentActorIndex < (predators.size()+prey.size()); currentActorIndex++ )
+			{
+				System.out.println("PPModel::runSimulation: Active actor is #"+currentActorIndex);
+				
+			}
 				
 		}
 	}
