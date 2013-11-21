@@ -1,10 +1,10 @@
 
-public class fish extends animal
+public class Fish extends Animal
 {
 	public String species;
 	
 	
-	public fish() 
+	public Fish() 
 	{
 		super(); //default constructor
 	}
@@ -13,15 +13,15 @@ public class fish extends animal
 	 * name: Unique identifier for fish
 	 * type: Predator or Prey
 	 * species: Type of fish
-	 * energy: life force of the animal (100 Healthy - 0 Dead)
+	 * energy: life force of the PPModel (100 Healthy - 0 Dead)
 	 */
-	public fish(String name, String type, String species, int energy)
+	public Fish(String id, String name, String type, String species, int energy, int x, int y)
 	{
-		super(name, type, energy);
+		super(id, name, type, energy, x, y);
 		
 		this.species = species;
 
-		System.out.println("fish::fish: Created a fish of the species: "+species);
+		System.out.println("Fish::Fish: Created a fish of the species: "+species);
 	}
 	
 	

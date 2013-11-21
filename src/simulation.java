@@ -1,23 +1,24 @@
 
 
 
-public class simulation 
+public class Simulation 
 {
 	static final int X_SIZE = 100;
 	static final int Y_SIZE = 100;
 	
 	
 	
-	public ppmodel prepSimulation(int numPred, int numPrey, int xSize, int ySize)
+	public PPModel prepSimulation(int numPred, int numPrey, int xSize, int ySize)
 	{
 		System.out.println("simulation::prepSimulation: setting up model with: numPred: "+numPred+", numPrey: "+numPrey);
 		
-		ppmodel model = new ppmodel(numPred, numPrey, xSize, ySize);
+		PPModel model = new PPModel(numPred, numPrey, xSize, ySize);
 		
 		return model;
 	}
 	
-	void runSimulation( ppmodel sim , int time)
+	
+	void runSimulation( PPModel sim , int time)
 	{
 		System.out.println("simulation::runSimulation: Running model with time: "+time);
 		
@@ -40,8 +41,8 @@ public class simulation
 		
 		
 		//setup the simulation with values from user		
-		simulation sim = new simulation();
-		ppmodel model = sim.prepSimulation(numPred, numPrey, xFieldSize, yFieldSize);
+		Simulation sim = new Simulation();
+		PPModel model = sim.prepSimulation(numPred, numPrey, xFieldSize, yFieldSize);
 		
 		
 		//run the actual simulation with user init conditions

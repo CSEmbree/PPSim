@@ -1,15 +1,13 @@
 import java.util.ArrayList;
 
-import com.sun.tools.javadoc.Messager.ExitJavadoc;
 
 
-
-public class ppmodel {
+public class PPModel extends SimActor{
 	//private final int DEF_PRED_SIZE = 10;
 	//private final int DEF_PREY_SIZE = 10;
 	
-	private ArrayList<animal> predators = new ArrayList<animal>();
-	private ArrayList<animal> prey = new ArrayList<animal>();
+	private ArrayList<SimActor> predators = new ArrayList<SimActor>();
+	private ArrayList<SimActor> prey = new ArrayList<SimActor>();
 	int numPred = 0;
 	int numPrey = 0;
 	
@@ -17,12 +15,12 @@ public class ppmodel {
 	int ySize = 0;
 	
 	
-	public ppmodel() 
+	public PPModel() 
 	{
 		this(0, 0, 100, 100);
 	}
 	
-	public ppmodel(int numPred, int numPrey, int xSize, int ySize)
+	public PPModel(int numPred, int numPrey, int xSize, int ySize)
 	{
 		//set initial number of predators and prey
 		this.numPred = numPred;
@@ -33,26 +31,31 @@ public class ppmodel {
 		if(xSize > 0)
 			this.xSize = xSize;
 		else {
-			System.out.println("ppmodel::ERROR: An invalid value for xSize= "+xSize+" was enountered. xSize must be >= 1.");
+			System.out.println("PPModel::PPModel: ERROR: An invalid value for xSize= "+xSize+" was enountered. xSize must be >= 1.");
 			System.exit(0); //exit gracefully
 		}
 
 		if(ySize > 0)
 			this.ySize = ySize;
 		else {
-			System.out.println("ppmodel::ERROR: An invalid value for ySize= "+ySize+" was enountered. xSize must be >= 1.");
+			System.out.println("PPModel::PPModel: ERROR: An invalid value for ySize= "+ySize+" was enountered. xSize must be >= 1.");
 			System.exit(0); //exit gracefully
 		}
 		
 		
 		//create that number of preds and prey
+		int x, y;
 		for (int i = 0; i < this.numPred; i++) {
 			String predName = "shark"+i;
 			String predType = "predator";
+			String id = predType+"_"+predName;
 			String predSpecies = "great white";
 			int predEnergy = 100;
+			x = 0;
+			y = 0;
 			
-			shark predShark = new shark( predName, predType, predSpecies, predEnergy);
+			Shark predShark = new Shark( id, predName, predType, predSpecies, predEnergy, x, y);
+			
 			
 			predators.add( predShark );
 		}
@@ -60,10 +63,13 @@ public class ppmodel {
 		for (int i = 0; i < this.numPrey; i++) {
 			String preyName = "fish"+i;
 			String preyType = "prey";
+			String id = preyType+"_"+preyName;
 			String preySpecies = "gold fish";
 			int preyEnergy = 100;
+			x = 0;
+			y = 0;
 			
-			fish preyFish = new fish( preyName, preyType, preySpecies, preyEnergy);
+			Fish preyFish = new Fish( id, preyName, preyType, preySpecies, preyEnergy, x, y);
 			
 			prey.add( preyFish );
 		}
@@ -72,18 +78,31 @@ public class ppmodel {
 	
 	public void runSimulation(int time)
 	{
-		System.out.println("ppmodel::runSimulation: Starting run for " + time + " time.");
+		System.out.println("PPModel::runSimulation: Starting run for " + time + " time.");
 		
-		for(int i = time; i > 0; i--)
+		for(int currentTime = time; currentTime > 0; currentTime--)
 		{
-			System.out.println("ppmodel::runSimulation: TIME STEP: " + i);
+			System.out.println("PPModel::runSimulation: TIME STEP: " + currentTime);
+			
+			//for(int currentActor =);
 				
 		}
 	}
 	
+	
+	public int getXCoordSize()
+	{
+		return this.xSize;
+	}
+	
+	public int getYCoordSize()
+	{
+		return this.ySize;
+	}
+	
 	public void displayInfo()
 	{
-		System.out.println( "Model has "+this.numPred+" Predators and "+this.numPrey+" Prey" );
+		System.out.println( "PPModel has "+this.numPred+" Predators and "+this.numPrey+" Prey on a field of "+xSize+"x"+ySize );
 		
 	}
 }

@@ -1,18 +1,18 @@
 
 
-public class shark extends animal
+public class Shark extends Animal
 {
 	public String species;
 	
 	
-	public shark() 
+	public Shark() 
 	{
 		super();
 	}
 	
-	public shark(String name, String type, String species, int energy)
+	public Shark(String id, String name, String type, String species, int energy, int x, int y)
 	{
-		super(name, type, energy);
+		super(id, name, type, energy, x, y);
 		
 		this.species = species;
 

@@ -1,10 +1,7 @@
-import java.util.Set;
-
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 
 
-public class animal 
+public class Animal extends SimActor
 {
 	String name;
 	String type;
@@ -13,28 +10,33 @@ public class animal
 	boolean alive;
 	
 	
-	public animal()
+	public Animal()
 	{
-		this("", "", 100);
+		this("", "", "", 100, 0, 0);
 	}
 	
 	/*
 	 * name: Unique identifier for fish
 	 * type: Predator or Prey
-	 * energy: life force of the animal (100 Healthy - 0 Dead)
+	 * energy: life force of the PPModel (100 Healthy - 0 Dead)
 	 */
-	public animal(String name, String type, int energy)
+	public Animal(String id, String name, String type, int energy, int x, int y)
 	{
+		super(id, x, y);
 		this.name = name;
 		this.type = type;
 		this.energy = energy;
+		
+		if(energy <= 0)
+			System.out.println("Animal::Animal: WARNING: Created PPModel "+name+" with "+energy+" energy will is dead.");
+		
 		
 		//set life state based on energy
 		this.state = determineState(this.energy);
 		this.alive = determineLife(this.energy);
 
 		
-		System.out.println("animal::animal: Created animal with: Name: "+this.name
+		System.out.println("Animal::Animal: Created Animal with: Name: "+this.name
 				+", Type: "+this.type
 				+", Energy: "+this.energy);
 	}
@@ -63,7 +65,7 @@ public class animal
 			return false; //dead
 	}
 	
-	int compareEnergy(animal otherAnimal)
+	int compareEnergy(Animal otherAnimal)
 	{
 		int compResult = 0;
 		
@@ -101,6 +103,21 @@ public class animal
 	boolean getLifeStatus()
 	{
 		return this.alive;
+	}
+	
+	String getid()
+	{
+		return super.getid();
+	}
+	
+	int getXCoord()
+	{
+		return super.getXCoord();
+	}
+	
+	int getYCoord()
+	{
+		return super.getYCoord();
 	}
 	
 	public void displayInfo()
