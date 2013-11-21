@@ -1,7 +1,7 @@
-import sun.tools.tree.SuperExpression;
 
 
-public class shark extends animal{
+public class shark extends animal
+{
 	public String species;
 	
 	
@@ -10,18 +10,44 @@ public class shark extends animal{
 		super();
 	}
 	
-	public shark(String name, String type, String species)
+	public shark(String name, String type, String species, int energy)
 	{
-		super(name, type);
-	}
-	
-	public shark(String name, String type, String species, String activity, String state, boolean alive)
-	{
-		super(name, type, activity, state, alive);
+		super(name, type, energy);
 		
 		this.species = species;
 
 		System.out.println("shark::shark: Created a shark of the species: "+species);
+	}
+
+	
+	String getName()
+	{
+		return super.getName();
+	}
+	
+	String getType()
+	{
+		return super.getType();
+	}
+	
+	String getSpecies()
+	{
+		return this.species;
+	}
+	
+	int getEnergy()
+	{
+		return super.getEnergy();
+	}
+	
+	String getState()
+	{
+		return super.getState();
+	}
+	
+	boolean getLifeStatus()
+	{
+		return super.getLifeStatus();
 	}
 	
 	public void displayInfo()
