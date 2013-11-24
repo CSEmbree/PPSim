@@ -1,10 +1,10 @@
 
 
-
 public class SimActor
 {
-	int x, y; //coordinates of this actor in the sim
-	String id;
+	private int x, y; //coordinates of this actor in the sim
+	private int destX, destY; //coordinated of this actors next destination
+	private String id;
 	
 	public SimActor()
 	{
@@ -25,17 +25,44 @@ public class SimActor
 		this.y = y;
 	}
 	
-	int getXCoord()
+	
+	public void setDestination(int destX, int destY)
+	{
+		setXDest(destX);
+		setYDest(destY);
+	}
+	
+	private void setXDest(int destX)
+	{
+		this.destX = destX;
+	}
+	
+	private void setYDest(int destY)
+	{
+		this.destY = destY;
+	}
+	
+	public int getXCoord()
 	{
 		return this.x;
 	}
 	
-	int getYCoord()
+	public int getYCoord()
 	{
 		return this.y;
 	}
 	
-	String getid()
+	public int getXDest()
+	{
+		return this.destX;
+	}
+	
+	public int getYDest()
+	{
+		return this.destY;
+	}
+	
+	public String getid()
 	{
 		return this.id;
 	}

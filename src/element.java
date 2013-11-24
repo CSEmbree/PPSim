@@ -1,7 +1,7 @@
 
 public class element 
 {
-	String id;
+	private  String id;
 	
 	public element()
 	{

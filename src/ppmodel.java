@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Random;
+
 
 
 
@@ -6,8 +8,8 @@ public class PPModel extends SimActor{
 	//private final int DEF_PRED_SIZE = 10;
 	//private final int DEF_PREY_SIZE = 10;
 	
-	private ArrayList<SimActor> predators = new ArrayList<SimActor>();
-	private ArrayList<SimActor> prey = new ArrayList<SimActor>();
+	private ArrayList<Animal> predators = new ArrayList<Animal>();
+	private ArrayList<Animal> prey = new ArrayList<Animal>();
 	int numPred = 0;
 	int numPrey = 0;
 	
@@ -51,10 +53,11 @@ public class PPModel extends SimActor{
 			String id = predType+"_"+predName;
 			String predSpecies = "great white";
 			int predEnergy = 100;
+			int maxDistTravel = 20;
 			x = 0;
 			y = 0;
 			
-			Shark predShark = new Shark( id, predName, predType, predSpecies, predEnergy, x, y);
+			Shark predShark = new Shark( id, predName, predType, predSpecies, predEnergy, maxDistTravel, x, y);
 			
 			
 			predators.add( predShark );
@@ -66,10 +69,11 @@ public class PPModel extends SimActor{
 			String id = preyType+"_"+preyName;
 			String preySpecies = "gold fish";
 			int preyEnergy = 100;
+			int maxDistTravel = 10;
 			x = 0;
 			y = 0;
 			
-			Fish preyFish = new Fish( id, preyName, preyType, preySpecies, preyEnergy, x, y);
+			Fish preyFish = new Fish( id, preyName, preyType, preySpecies, preyEnergy, maxDistTravel, x, y);
 			
 			prey.add( preyFish );
 		}
@@ -84,6 +88,8 @@ public class PPModel extends SimActor{
 		{
 			System.out.println("PPModel::runSimulation: TIME STEP: " + currentTime);
 			
+			cleanAndPlan();
+			
 			for(int currentActorIndex = 0; currentActorIndex < (predators.size()+prey.size()); currentActorIndex++ )
 			{
 				System.out.println("PPModel::runSimulation: Active actor is #"+currentActorIndex);
@@ -93,6 +99,60 @@ public class PPModel extends SimActor{
 		}
 	}
 	
+	public void cleanAndPlan()
+	{
+		System.out.println("PPModel::cleanAndPlan: Cleaning Updater any dead actors and deciding their next move");
+		boolean removed;
+		
+		
+		//remove any dead predators and determine their next move
+		removed = true;
+		while(removed == true) 
+		{
+			removed = false;
+			for(int currentActorIndex = 0; currentActorIndex < predators.size(); currentActorIndex++ )
+			{
+				if(predators.get(currentActorIndex).getEnergy() <= 0)
+				{
+					predators.remove(currentActorIndex);
+					removed = true; //if clean up was performed, run the whole loop again
+				}
+			}
+		}
+		
+		
+		for(int currentActorIndex = 0; currentActorIndex < predators.size(); currentActorIndex++ )
+		{
+			predators.get(currentActorIndex).chooseNewDestination(xSize, ySize);	
+		}
+		
+		
+		
+		//remove any dead prey and determine their next move
+		removed = true;
+		while(removed == true) 
+		{
+			removed = false;
+			for(int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++ )
+			{
+				if(predators.get(currentActorIndex).getEnergy() <= 0)
+				{
+					predators.remove(currentActorIndex);
+					removed = true; //if clean up was performed, run the whole loop again
+				}
+			}
+		}
+		
+		
+
+	}
+	
+	private int getRandomXCoord()
+	{
+		Random rand = new Random();
+		
+		return rand.nextInt(xSize); //return random x value between (0-xSize)
+	}
 	
 	public int getXCoordSize()
 	{
