@@ -1,7 +1,6 @@
 
 public class Fish extends Animal
 {
-	private int maxDistTravel;
 	private String species;
 	
 	

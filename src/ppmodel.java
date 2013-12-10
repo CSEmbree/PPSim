@@ -1,10 +1,7 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 
-
-
-public class PPModel extends SimActor{
+public class PPModel extends SimActor {
 	//private final int DEF_PRED_SIZE = 10;
 	//private final int DEF_PREY_SIZE = 10;
 	
@@ -90,18 +87,13 @@ public class PPModel extends SimActor{
 			
 			cleanAndPlan();
 			
-			for(int currentActorIndex = 0; currentActorIndex < (predators.size()+prey.size()); currentActorIndex++ )
-			{
-				System.out.println("PPModel::runSimulation: Active actor is #"+currentActorIndex);
-				
-			}
-				
+			activateAndMove();	
 		}
 	}
 	
 	public void cleanAndPlan()
 	{
-		System.out.println("PPModel::cleanAndPlan: Cleaning Updater any dead actors and deciding their next move");
+		System.out.println("PPModel::cleanAndPlan: Cleaning updating any dead actors and deciding their next move");
 		boolean removed;
 		
 		
@@ -135,23 +127,33 @@ public class PPModel extends SimActor{
 			removed = false;
 			for(int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++ )
 			{
-				if(predators.get(currentActorIndex).getEnergy() <= 0)
+				if(prey.get(currentActorIndex).getEnergy() <= 0)
 				{
-					predators.remove(currentActorIndex);
+					prey.remove(currentActorIndex);
 					removed = true; //if clean up was performed, run the whole loop again
 				}
 			}
 		}
 		
-		
-
+		for(int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++ )
+		{
+			prey.get(currentActorIndex).chooseNewDestination(xSize, ySize);	
+		}
 	}
 	
-	private int getRandomXCoord()
+	private void activateAndMove()
 	{
-		Random rand = new Random();
+		System.out.println("PPModel::activateAndMove: Starting to move things...");
+
+		double timeStepPartition = 100;
 		
-		return rand.nextInt(xSize); //return random x value between (0-xSize)
+		//TODO - account for delta move and add in steps
+		//ArrayList<DeltaMove> = new ArrayList<DeltaMove>();
+		
+		
+		
+		
+		System.out.println("PPModel::activateAndMove: Stopping moving things...");
 	}
 	
 	public int getXCoordSize()

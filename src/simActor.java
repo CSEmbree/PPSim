@@ -66,5 +66,25 @@ public class SimActor
 	{
 		return this.id;
 	}
+	
+	public double getXDistToTravel()
+	{
+		return distance(x, y, destX, destY);
+	}
+	
+	public double getYDistToTravel()
+	{
+		return Math.abs(destX-x);
+	}
+	
+	public double getDistToTravel()
+	{
+		return Math.abs(destY-y);
+	}
+	
+	double distance(double x1, double y1, double x2, double y2) 
+	{ 
+		return Math.sqrt( ( x1 - x2 ) * ( x1 - x2 ) + ( y1 - y2 ) * ( y1 - y2 ) ); 
+	}
 
 }
