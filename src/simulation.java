@@ -1,4 +1,4 @@
-
+//Cameron Embree, Gradon Faulkner
 
 public class Simulation 
 {

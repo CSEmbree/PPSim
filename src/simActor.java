@@ -1,4 +1,4 @@
-//test 
+//Cameron Embree, Gradon Faulkner
 
 public class SimActor
 {
