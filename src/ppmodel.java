@@ -2,24 +2,24 @@ import java.util.ArrayList;
 
 
 public class PPModel extends SimActor {
-	//private final int DEF_PRED_SIZE = 10;
-	//private final int DEF_PREY_SIZE = 10;
+	//private final double DEF_PRED_SIZE = 10;
+	//private final double DEF_PREY_SIZE = 10;
 	
-	private ArrayList<Animal> predators = new ArrayList<Animal>();
-	private ArrayList<Animal> prey = new ArrayList<Animal>();
-	int numPred = 0;
-	int numPrey = 0;
+	private ArrayList<Animal> predators = new ArrayList<Animal>(); //set of all predators in simulation
+	private ArrayList<Animal> prey = new ArrayList<Animal>(); //set of all prey in simulation
+	int numPred = 0; //number of prey in the simulation currently, convenience variable
+	int numPrey = 0; //number of predators in the simulation currently, convenience variable
 	
-	int xSize = 0;
-	int ySize = 0;
+	double xSize = 0.0; //max x dimention of simulation (x=0, 1,...,xSize)
+	double ySize = 0.0; //max y dimention of simulation (y=0, 1,...,ySize)
 	
 	
 	public PPModel() 
 	{
-		this(0, 0, 100, 100);
+		this(0, 0, 100.0, 100.0);
 	}
 	
-	public PPModel(int numPred, int numPrey, int xSize, int ySize)
+	public PPModel(int numPred, int numPrey, double xSize, double ySize)
 	{
 		//set initial number of predators and prey
 		this.numPred = numPred;
@@ -27,14 +27,14 @@ public class PPModel extends SimActor {
 		
 		
 		//set size for field of play
-		if(xSize > 0)
+		if(xSize > 0.0)
 			this.xSize = xSize;
 		else {
 			System.out.println("PPModel::PPModel: ERROR: An invalid value for xSize= "+xSize+" was enountered. xSize must be >= 1.");
 			System.exit(0); //exit gracefully
 		}
 
-		if(ySize > 0)
+		if(ySize > 0.0)
 			this.ySize = ySize;
 		else {
 			System.out.println("PPModel::PPModel: ERROR: An invalid value for ySize= "+ySize+" was enountered. xSize must be >= 1.");
@@ -43,18 +43,18 @@ public class PPModel extends SimActor {
 		
 		
 		//create that number of preds and prey
-		int x, y;
+		double xPos, yPos, energy, maxDistTravel;
 		for (int i = 0; i < this.numPred; i++) {
 			String predName = "shark"+i;
 			String predType = "predator";
 			String id = predType+"_"+predName;
 			String predSpecies = "great white";
-			int predEnergy = 100;
-			int maxDistTravel = 20;
-			x = 0;
-			y = 0;
+			energy = 100.0;
+			maxDistTravel = 20.0;
+			xPos = 0;
+			yPos = 0;
 			
-			Shark predShark = new Shark( id, predName, predType, predSpecies, predEnergy, maxDistTravel, x, y);
+			Shark predShark = new Shark( id, predName, predType, predSpecies, energy, maxDistTravel, xPos, yPos);
 			
 			
 			predators.add( predShark );
@@ -65,33 +65,34 @@ public class PPModel extends SimActor {
 			String preyType = "prey";
 			String id = preyType+"_"+preyName;
 			String preySpecies = "gold fish";
-			int preyEnergy = 100;
-			int maxDistTravel = 10;
-			x = 0;
-			y = 0;
+			energy = 100;
+			maxDistTravel = 10;
+			xPos = 0;
+			yPos = 0;
 			
-			Fish preyFish = new Fish( id, preyName, preyType, preySpecies, preyEnergy, maxDistTravel, x, y);
+			Fish preyFish = new Fish( id, preyName, preyType, preySpecies, energy, maxDistTravel, xPos, yPos);
 			
 			prey.add( preyFish );
 		}
 	}
 	
 	
-	public void runSimulation(int time)
+	public void runSimulation(int time, double timeStepPartitions)
 	{
 		System.out.println("PPModel::runSimulation: Starting run for " + time + " time.");
+		
 		
 		for(int currentTime = time; currentTime > 0; currentTime--)
 		{
 			System.out.println("PPModel::runSimulation: TIME STEP: " + currentTime);
 			
-			cleanAndPlan();
+			cleanAndPlan(timeStepPartitions);
 			
 			activateAndMove();	
 		}
 	}
 	
-	public void cleanAndPlan()
+	public void cleanAndPlan(double timeStepPartitions)
 	{
 		System.out.println("PPModel::cleanAndPlan: Cleaning updating any dead actors and deciding their next move");
 		boolean removed;
@@ -115,7 +116,7 @@ public class PPModel extends SimActor {
 		
 		for(int currentActorIndex = 0; currentActorIndex < predators.size(); currentActorIndex++ )
 		{
-			predators.get(currentActorIndex).chooseNewDestination(xSize, ySize);	
+			predators.get(currentActorIndex).chooseNewDestination(xSize, ySize, timeStepPartitions);	
 		}
 		
 		
@@ -137,7 +138,7 @@ public class PPModel extends SimActor {
 		
 		for(int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++ )
 		{
-			prey.get(currentActorIndex).chooseNewDestination(xSize, ySize);	
+			prey.get(currentActorIndex).chooseNewDestination(xSize, ySize, timeStepPartitions);	
 		}
 	}
 	
@@ -148,7 +149,8 @@ public class PPModel extends SimActor {
 		double timeStepPartition = 100;
 		
 		//TODO - account for delta move and add in steps
-		//ArrayList<DeltaMove> = new ArrayList<DeltaMove>();
+		
+		
 		
 		
 		
@@ -156,12 +158,12 @@ public class PPModel extends SimActor {
 		System.out.println("PPModel::activateAndMove: Stopping moving things...");
 	}
 	
-	public int getXCoordSize()
+	public double getXCoordSize()
 	{
 		return this.xSize;
 	}
 	
-	public int getYCoordSize()
+	public double getYCoordSize()
 	{
 		return this.ySize;
 	}

@@ -2,7 +2,7 @@
 
 public class Shark extends Animal
 {
-	private String species;
+	private String species; //identification
 	
 	
 	public Shark() 
@@ -10,15 +10,20 @@ public class Shark extends Animal
 		super();
 	}
 	
-	public Shark(String id, String name, String type, String species, int energy, int maxDistTravel, int x, int y)
+	public Shark(String id, String name, String type, String species, double energy, double maxDistTravel, double x, double y)
 	{
 		super(id, name, type, energy, maxDistTravel, x, y);
 		
-		this.species = species;
+		setSpecies(species);
 
 		System.out.println("shark::shark: Created a shark of the species: "+species);
 	}
 
+	
+	private void setSpecies(String species)
+	{
+		this.species = species;
+	}
 	
 	public String getName()
 	{
@@ -35,7 +40,7 @@ public class Shark extends Animal
 		return this.species;
 	}
 	
-	public int getEnergy()
+	public double getEnergy()
 	{
 		return super.getEnergy();
 	}

@@ -1,7 +1,8 @@
 
+
 public class Fish extends Animal
 {
-	private String species;
+	private String species; //identification
 	
 	
 	public Fish() 
@@ -15,7 +16,7 @@ public class Fish extends Animal
 	 * species: Type of fish
 	 * energy: life force of the PPModel (100 Healthy - 0 Dead)
 	 */
-	public Fish(String id, String name, String type, String species, int energy, int maxDistTravel, int x, int y)
+	public Fish(String id, String name, String type, String species, double energy, double maxDistTravel, double x, double y)
 	{
 		super(id, name, type, energy, maxDistTravel, x, y);
 		setSpecies(species);
@@ -28,7 +29,6 @@ public class Fish extends Animal
 	{
 		this.species = species;
 	}
-	
 	
 	public String getName()
 	{
@@ -45,7 +45,7 @@ public class Fish extends Animal
 		return this.species;
 	}
 	
-	public int getEnergy()
+	public double getEnergy()
 	{
 		return super.getEnergy();
 	}

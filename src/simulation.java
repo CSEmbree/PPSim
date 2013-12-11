@@ -1,14 +1,13 @@
-//test
 
 
 public class Simulation 
 {
-	static final int X_SIZE = 100;
-	static final int Y_SIZE = 100;
+	static final double X_SIZE = 100.0;
+	static final double Y_SIZE = 100.0;
 	
 	
 	
-	public PPModel prepSimulation(int numPred, int numPrey, int xSize, int ySize)
+	public PPModel prepSimulation(int numPred, int numPrey, double xSize, double ySize)
 	{
 		System.out.println("simulation::prepSimulation: setting up model with: numPred: "+numPred+", numPrey: "+numPrey);
 		
@@ -18,11 +17,11 @@ public class Simulation
 	}
 	
 	
-	void runSimulation( PPModel sim , int time)
+	void runSimulation( PPModel sim, int time, double timeStepPartitions)
 	{
 		System.out.println("simulation::runSimulation: Running model with time: "+time);
 		
-		sim.runSimulation( time );
+		sim.runSimulation( time, timeStepPartitions );
 		
 		System.out.println("simulation::runSimulation: Finsihed running model with time: "+time);
 	}
@@ -36,8 +35,10 @@ public class Simulation
 		int numPrey = 5;
 		int numPred = 5;
 		int simTime = 10;
-		int xFieldSize = X_SIZE;
-		int yFieldSize = Y_SIZE;
+		double xFieldSize = X_SIZE;
+		double yFieldSize = Y_SIZE;
+		
+		double timeStepPartitions = 100;
 		
 		
 		//setup the simulation with values from user		
@@ -46,7 +47,7 @@ public class Simulation
 		
 		
 		//run the actual simulation with user init conditions
-		sim.runSimulation(model, simTime);
+		sim.runSimulation(model, simTime, timeStepPartitions);
 		
 		
 		System.out.println("simulation::main: Exiting main.");

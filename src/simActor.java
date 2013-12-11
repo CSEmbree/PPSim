@@ -2,13 +2,15 @@
 
 public class SimActor
 {
-	private int x, y; //coordinates of this actor in the sim
-	private int destX, destY; //coordinated of this actors next destination
-	private String id;
+	private String id; //identification
+	private double x, y; //coordinates of this actor in the sim
+	private double destX, destY; //coordinated of this actors next destination
+	private double deltaX, deltaY; //part of the distance that from x to DestX and y and Dest Y that is made at each partitioned time step
+
 	
 	public SimActor()
 	{
-		this( "", 0, 0 );
+		this( "", 0.0, 0.0 );
 	}
 	
 	/*
@@ -16,48 +18,93 @@ public class SimActor
 	 * x: x coordiante in sim, must be in valid range
 	 * y: y coordiante in sim, must be in valid range
 	 */
-	public SimActor(String id, int x, int y)
+	public SimActor(String id, double x, double y)
 	{
 		System.out.println("SimActor::SimActor: Creating actor with id: "+id+" at position ("+x+","+y+")");
 		
-		this.id = id;
-		this.x = x;
-		this.y = y;
+		setID(id);
+		setX(x);
+		setY(y);
 	}
 	
 	
-	public void setDestination(int destX, int destY)
+	private void setDeltaX(double dx)
+	{
+		this.deltaX = dx;
+	}
+	
+	private void setDeltaY(double dy)
+	{
+		this.deltaY = dy;
+	}
+	
+	private void setX(double x)
+	{
+		this.x = x;
+	}
+	
+	private void setY(double y)
+	{
+		this.y = y;
+	}
+	
+	private void setID(String id)
+	{
+		this.id = id;
+	}
+	
+	public void setDestination(double destX, double destY)
 	{
 		setXDest(destX);
 		setYDest(destY);
 	}
 	
-	private void setXDest(int destX)
+	public void setDestination(double destX, double destY, double timeStepPartitions)
+	{
+		setXDest(destX, timeStepPartitions);
+		setYDest(destY, timeStepPartitions);
+	}
+	
+	private void setXDest(double destX)
 	{
 		this.destX = destX;
+		setDeltaX(getXDistToTravel() / 1.0);
 	}
 	
-	private void setYDest(int destY)
+	private void setYDest(double destY)
 	{
 		this.destY = destY;
+		setDeltaY(getYDistToTravel() / 1.0);
 	}
 	
-	public int getXCoord()
+	private void setXDest(double destX, double partitions)
+	{
+		this.destX = destX;
+		this.deltaX = getXDistToTravel() / partitions;
+	}
+	
+	private void setYDest(double destY, double partitions)
+	{
+		this.destY = destY;
+		this.deltaY = getYDistToTravel() / partitions;
+	}
+	
+	public double getXCoord()
 	{
 		return this.x;
 	}
 	
-	public int getYCoord()
+	public double getYCoord()
 	{
 		return this.y;
 	}
 	
-	public int getXDest()
+	public double getXDest()
 	{
 		return this.destX;
 	}
 	
-	public int getYDest()
+	public double getYDest()
 	{
 		return this.destY;
 	}
@@ -82,7 +129,7 @@ public class SimActor
 		return Math.abs(destY-y);
 	}
 	
-	double distance(double x1, double y1, double x2, double y2) 
+	public double distance(double x1, double y1, double x2, double y2) 
 	{ 
 		return Math.sqrt( ( x1 - x2 ) * ( x1 - x2 ) + ( y1 - y2 ) * ( y1 - y2 ) ); 
 	}
