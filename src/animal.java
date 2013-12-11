@@ -25,10 +25,10 @@ public class Animal extends SimActor
 	public Animal(String id, String name, String type, double energy, double maxDistTravel, double x, double y)
 	{
 		super(id, x, y);
-		setName(name);
-		setType(type);
-		setEnergy(energy);
-		setMaxDistTravel(maxDistTravel);
+		this.setName(name);
+		this.setType(type);
+		this.setEnergy(energy);
+		this.setMaxDistTravel(maxDistTravel);
 		
 		if(energy <= 0.0)
 			System.out.println("Animal::Animal: WARNING: Created PPModel "+name+" with "+energy+" energy will is dead.");

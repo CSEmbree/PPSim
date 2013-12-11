@@ -23,20 +23,20 @@ public class PPModel extends SimActor {
 	public PPModel(int numPred, int numPrey, double xSize, double ySize)
 	{
 		//set initial number of predators and prey
-		this.numPred = numPred;
-		this.numPrey = numPrey;
+		this.setNumPred(numPred);
+		this.setNumPrey(numPrey);
 		
 		
 		//set size for field of play
 		if(xSize > 0.0)
-			this.xSize = xSize;
+			this.setXSize( xSize );
 		else {
 			System.out.println("PPModel::PPModel: ERROR: An invalid value for xSize= "+xSize+" was enountered. xSize must be >= 1.");
 			System.exit(0); //exit gracefully
 		}
 
 		if(ySize > 0.0)
-			this.ySize = ySize;
+			this.setYSize( ySize) ;
 		else {
 			System.out.println("PPModel::PPModel: ERROR: An invalid value for ySize= "+ySize+" was enountered. xSize must be >= 1.");
 			System.exit(0); //exit gracefully
@@ -56,7 +56,6 @@ public class PPModel extends SimActor {
 			yPos = 0;
 			
 			Shark predShark = new Shark( id, predName, predType, predSpecies, energy, maxDistTravel, xPos, yPos);
-			
 			
 			predators.add( predShark );
 		}
@@ -167,6 +166,26 @@ public class PPModel extends SimActor {
 	public double getYCoordSize()
 	{
 		return this.ySize;
+	}
+	
+	private void setNumPrey(int preyCount)
+	{
+		this.numPrey = preyCount;
+	}
+	
+	private void setNumPred(int predCount)
+	{
+		this.numPred = predCount;
+	}
+	
+	private void setXSize( double xSize )
+	{
+		this.xSize = xSize;
+	}
+	
+	private void setYSize( double ySize )
+	{
+		this.ySize = ySize;
 	}
 	
 	public void displayInfo()

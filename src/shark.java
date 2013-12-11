@@ -14,7 +14,7 @@ public class Shark extends Animal
 	{
 		super(id, name, type, energy, maxDistTravel, x, y);
 		
-		setSpecies(species);
+		this.setSpecies(species);
 
 		System.out.println("shark::shark: Created a shark of the species: "+species);
 	}
@@ -58,7 +58,6 @@ public class Shark extends Animal
 	public void displayInfo()
 	{
 		System.out.println( "Shark of species: "+this.species );
-		
 		super.displayInfo();
 	}
 	

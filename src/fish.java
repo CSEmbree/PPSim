@@ -19,7 +19,7 @@ public class Fish extends Animal
 	public Fish(String id, String name, String type, String species, double energy, double maxDistTravel, double x, double y)
 	{
 		super(id, name, type, energy, maxDistTravel, x, y);
-		setSpecies(species);
+		this.setSpecies(species);
 
 		System.out.println("Fish::Fish: Created a fish of the species: "+species);
 	}
@@ -63,7 +63,6 @@ public class Fish extends Animal
 	public void displayInfo()
 	{
 		System.out.println( "Fish of species: "+this.species );
-		
 		super.displayInfo();
 	}
 

@@ -22,9 +22,9 @@ public class SimActor
 	{
 		System.out.println("SimActor::SimActor: Creating actor with id: "+id+" at position ("+x+","+y+")");
 		
-		setID(id);
-		setX(x);
-		setY(y);
+		this.setID(id);
+		this.setX(x);
+		this.setY(y);
 	}
 	
 	
@@ -55,38 +55,38 @@ public class SimActor
 	
 	public void setDestination(double destX, double destY)
 	{
-		setXDest(destX);
-		setYDest(destY);
+		this.setXDest(destX);
+		this.setYDest(destY);
 	}
 	
 	public void setDestination(double destX, double destY, double timeStepPartitions)
 	{
-		setXDest(destX, timeStepPartitions);
-		setYDest(destY, timeStepPartitions);
+		this.setXDest(destX, timeStepPartitions);
+		this.setYDest(destY, timeStepPartitions);
 	}
 	
 	private void setXDest(double destX)
 	{
 		this.destX = destX;
-		setDeltaX(getXDistToTravel() / 1.0);
+		this.setDeltaX(getXDistToTravel() / 1.0);
 	}
 	
 	private void setYDest(double destY)
 	{
 		this.destY = destY;
-		setDeltaY(getYDistToTravel() / 1.0);
+		this.setDeltaY(getYDistToTravel() / 1.0);
 	}
 	
 	private void setXDest(double destX, double partitions)
 	{
 		this.destX = destX;
-		this.deltaX = getXDistToTravel() / partitions;
+		this.setDeltaX( getXDistToTravel() / partitions );
 	}
 	
 	private void setYDest(double destY, double partitions)
 	{
 		this.destY = destY;
-		this.deltaY = getYDistToTravel() / partitions;
+		this.setDeltaX( getYDistToTravel() / partitions );
 	}
 	
 	public double getXCoord()
