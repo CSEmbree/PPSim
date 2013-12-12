@@ -48,13 +48,17 @@ public class Animal extends SimActor
 	public void chooseNewDestination(double xLimit, double yLimit, double timeStepPartitions)
 	{		
 		Random rand = new Random();
+		rand.setSeed(System.currentTimeMillis());
+		
 		//rand.setSeed(arg0); //to-do - add SEED value of time
 		
 		double distMoveX, distMoveY;
 		double newCoordX, newCoordY;
 		
-		//pick a new destination x and y coordinate
-		distMoveX = (rand.nextDouble()*2*maxDistTravel) - maxDistTravel;
+		
+		//pick a new destination x coordinate 
+		double randX = rand.nextDouble();
+		distMoveX = (randX*2*maxDistTravel) - maxDistTravel;
 		newCoordX = getXCoord()+distMoveX;
 		if(newCoordX < 0)
 			newCoordX+=Math.abs(distMoveX);
@@ -62,7 +66,9 @@ public class Animal extends SimActor
 			newCoordX-=Math.abs(distMoveX);
 		
 		
-		distMoveY = (rand.nextDouble()*2*maxDistTravel) - maxDistTravel;
+		//pick a new destination y coordinate 
+		double randY = rand.nextDouble();
+		distMoveY = (randY*2*maxDistTravel) - maxDistTravel;
 		newCoordY = getYCoord()+distMoveY;
 		if(newCoordY < 0)
 			newCoordY+=Math.abs(distMoveY);
@@ -70,6 +76,7 @@ public class Animal extends SimActor
 			newCoordY-=Math.abs(distMoveY);
 		
 		
+		//set the new x and y coordinate formally
 		setDestination(newCoordX, newCoordY, timeStepPartitions);
 	}
 	

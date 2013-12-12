@@ -1,5 +1,7 @@
 //Cameron Embree, Gradon Faulkner
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class PPModel extends SimActor {
@@ -42,6 +44,11 @@ public class PPModel extends SimActor {
 			System.exit(0); //exit gracefully
 		}
 
+		Random rand = new Random();
+		rand.setSeed(System.currentTimeMillis());
+		
+		//int randPosX = rand.nextInt((int)xSize);
+		//int randPosY = rand.nextInt((int)ySize);
 
 		//create that number of preds and prey
 		double xPos, yPos, energy, maxDistTravel;
@@ -52,8 +59,8 @@ public class PPModel extends SimActor {
 			String predSpecies = "great white";
 			energy = 100.0;
 			maxDistTravel = 20.0;
-			xPos = 0;
-			yPos = 0;
+			xPos = rand.nextInt((int)xSize);
+			yPos = rand.nextInt((int)ySize);
 
 			Shark predShark = new Shark( id, predName, predType, predSpecies, energy, maxDistTravel, xPos, yPos);
 
@@ -67,8 +74,8 @@ public class PPModel extends SimActor {
 			String preySpecies = "gold fish";
 			energy = 100;
 			maxDistTravel = 10;
-			xPos = 0;
-			yPos = 0;
+			xPos = rand.nextInt((int)xSize);
+			yPos = rand.nextInt((int)ySize);
 
 			Fish preyFish = new Fish( id, preyName, preyType, preySpecies, energy, maxDistTravel, xPos, yPos);
 

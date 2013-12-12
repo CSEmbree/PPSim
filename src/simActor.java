@@ -86,7 +86,8 @@ public class SimActor
 	private void setYDest(double destY, double partitions)
 	{
 		this.destY = destY;
-		this.setDeltaX( getYDistToTravel() / partitions ); //moves to final location in "partitions" move
+		
+		this.setDeltaY( getYDistToTravel() / partitions ); //moves to final location in "partitions" move
 	}
 	
 	public double getXCoord()
@@ -126,17 +127,17 @@ public class SimActor
 	
 	public double getXDistToTravel()
 	{
-		return distance(x, y, destX, destY);
+		return Math.abs(destX-x);
 	}
 	
 	public double getYDistToTravel()
 	{
-		return Math.abs(destX-x);
+		return Math.abs(destY-y);
 	}
 	
 	public double getDistToTravel()
 	{
-		return Math.abs(destY-y);
+		return distance(x, y, destX, destY);
 	}
 	
 	public double distance(double x1, double y1, double x2, double y2) 
