@@ -38,12 +38,12 @@ public class SimActor
 		this.deltaY = dy;
 	}
 	
-	private void setX(double x)
+	protected void setX(double x)
 	{
 		this.x = x;
 	}
 	
-	private void setY(double y)
+	protected void setY(double y)
 	{
 		this.y = y;
 	}
@@ -68,25 +68,25 @@ public class SimActor
 	private void setXDest(double destX)
 	{
 		this.destX = destX;
-		this.setDeltaX(getXDistToTravel() / 1.0);
+		this.setDeltaX(getXDistToTravel() / 1.0); //moves to final location in 1 move
 	}
 	
 	private void setYDest(double destY)
 	{
 		this.destY = destY;
-		this.setDeltaY(getYDistToTravel() / 1.0);
+		this.setDeltaY(getYDistToTravel() / 1.0); //moves to final location in 1 move
 	}
 	
 	private void setXDest(double destX, double partitions)
 	{
 		this.destX = destX;
-		this.setDeltaX( getXDistToTravel() / partitions );
+		this.setDeltaX( getXDistToTravel() / partitions ); //moves to final location in "partitions" move
 	}
 	
 	private void setYDest(double destY, double partitions)
 	{
 		this.destY = destY;
-		this.setDeltaX( getYDistToTravel() / partitions );
+		this.setDeltaX( getYDistToTravel() / partitions ); //moves to final location in "partitions" move
 	}
 	
 	public double getXCoord()
@@ -107,6 +107,16 @@ public class SimActor
 	public double getYDest()
 	{
 		return this.destY;
+	}
+	
+	public double getDeltaX()
+	{
+		return this.deltaX;
+	}
+	
+	public double getDeltaY()
+	{
+		return this.deltaY;
 	}
 	
 	public String getid()

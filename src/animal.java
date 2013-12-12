@@ -73,6 +73,11 @@ public class Animal extends SimActor
 		setDestination(newCoordX, newCoordY, timeStepPartitions);
 	}
 	
+	public void setXYPosition(double x, double y)
+	{
+		super.setX(x);
+		super.setY(y);
+	}
 	
 	public void setDestination(double xDest, double yDest)
 	{		
@@ -180,6 +185,26 @@ public class Animal extends SimActor
 	public double getYCoord()
 	{
 		return super.getYCoord();
+	}
+	
+	public double getXDest()
+	{
+		return super.getXDest();
+	}
+	
+	public double getYDest()
+	{
+		return super.getYDest();
+	}
+	
+	public double getDeltaX()
+	{
+		return super.getDeltaX();
+	}
+	
+	public double getDeltaY()
+	{
+		return super.getDeltaY();
 	}
 	
 	public void displayInfo()
