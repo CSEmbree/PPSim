@@ -86,7 +86,6 @@ public class SimActor
 	private void setYDest(double destY, double partitions)
 	{
 		this.destY = destY;
-		
 		this.setDeltaY( getYDistToTravel() / partitions ); //moves to final location in "partitions" move
 	}
 	

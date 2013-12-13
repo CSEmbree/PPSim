@@ -166,7 +166,7 @@ public class PPModel extends SimActor {
 				an.setXYPosition( an.getXCoord()+an.getDeltaX(), an.getYCoord()+an.getDeltaY() );
 			}
 		}
-		this.displayInfo();
+		this.displayInfo(); //for state debug checking
 
 
 		System.out.println("PPModel::activateAndMove: Stopping moving things...");

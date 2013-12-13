@@ -54,27 +54,30 @@ public class Animal extends SimActor
 		
 		double distMoveX, distMoveY;
 		double newCoordX, newCoordY;
-		
+		double randVal = rand.nextDouble();
 		
 		//pick a new destination x coordinate 
-		double randX = rand.nextDouble();
-		distMoveX = (randX*2*maxDistTravel) - maxDistTravel;
+		randVal = rand.nextDouble();
+		distMoveX = (randVal*2*maxDistTravel) - maxDistTravel;
 		newCoordX = getXCoord()+distMoveX;
-		if(newCoordX < 0)
-			newCoordX+=Math.abs(distMoveX);
-		else if(newCoordX > xLimit)
-			newCoordX-=Math.abs(distMoveX);
+		//System.out.println(" TEST1: "+newCoordX);
+
+		if(newCoordX < 0 || newCoordX > xLimit)
+			newCoordX = getXCoord();
 		
+		
+		//System.out.println(" TEST2: "+newCoordX);
 		
 		//pick a new destination y coordinate 
-		double randY = rand.nextDouble();
-		distMoveY = (randY*2*maxDistTravel) - maxDistTravel;
+		randVal = rand.nextDouble();
+		distMoveY = (randVal*2*maxDistTravel) - maxDistTravel;
 		newCoordY = getYCoord()+distMoveY;
-		if(newCoordY < 0)
-			newCoordY+=Math.abs(distMoveY);
-		else if(newCoordY > yLimit)
-			newCoordY-=Math.abs(distMoveY);
+		if(newCoordY < 0 || newCoordY > yLimit)
+			newCoordY = getYCoord();
 		
+		
+		//System.out.println(" NEW coord ("+newCoordX+","+newCoordY+")");
+
 		
 		//set the new x and y coordinate formally
 		setDestination(newCoordX, newCoordY, timeStepPartitions);
@@ -93,6 +96,12 @@ public class Animal extends SimActor
 		
 		super.setDestination(xDest, yDest);	
 	}
+	
+	public void setDestination(double xDest, double yDest, double timeStepPartitions)
+	{
+		super.setDestination(xDest, yDest, timeStepPartitions);
+	}
+
 	
 	
 	public String determineState(double energy)
