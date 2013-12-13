@@ -20,6 +20,28 @@ public class Simulation
 	
 	void runSimulation( PPModel sim, int time, double timeStepPartitions)
 	{
+
+		// System.out.println("simulation::runSimulation: Running model with time: "+time);
+		
+		// sim.runSimulation( time );
+		
+		// System.out.println("simulation::runSimulation: Finsihed running model with time: "+time);
+		
+
+		//===========This is code that needs to be modified to run=====
+		/*while(true) {
+            try {
+                Thread.sleep(50);
+            } catch(InterruptedException e) {
+                return;
+            }
+            for(Blob blob : blobs) {
+                blob.tick();
+            }
+        } */
+
+
+
 		System.out.println("simulation::runSimulation: Running model with time: "+time);
 		
 		sim.runSimulation( time, timeStepPartitions );
@@ -52,6 +74,27 @@ public class Simulation
 		
 		
 		System.out.println("simulation::main: Exiting main.");
+
+
+
+
+
+
+		//============This needs to be modified for Simulation====
+		/*
+		Simulation simulation = new Simulation();
+
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(new Animation(simulation));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        simulation.simulate();
+		*/
+
+
+		
 	}
 	
 }
