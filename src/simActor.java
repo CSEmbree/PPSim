@@ -1,6 +1,6 @@
 //Cameron Embree, Gradon Faulkner
 
-public class SimActor
+public class SimActor extends Observable 
 {
 	private String id; //identification
 	private double x, y; //coordinates of this actor in the sim
