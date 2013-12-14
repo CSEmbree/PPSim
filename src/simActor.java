@@ -1,5 +1,6 @@
 //Cameron Embree, Gradon Faulkner
-
+import java.util.Observable;
+import java.util.Observer;
 public class SimActor extends Observable 
 {
 	private String id; //identification

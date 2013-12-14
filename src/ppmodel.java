@@ -8,8 +8,8 @@ public class PPModel extends SimActor {
 	//private final double DEF_PRED_SIZE = 10;
 	//private final double DEF_PREY_SIZE = 10;
 
-	private ArrayList<Animal> predators = new ArrayList<Animal>(); //set of all predators in simulation
-	private ArrayList<Animal> prey = new ArrayList<Animal>(); //set of all prey in simulation
+	public ArrayList<Animal> predators = new ArrayList<Animal>(); //set of all predators in simulation
+	public ArrayList<Animal> prey = new ArrayList<Animal>(); //set of all prey in simulation
 	int numPred = 0; //number of prey in the simulation currently, convenience variable
 	int numPrey = 0; //number of predators in the simulation currently, convenience variable
 
@@ -94,8 +94,19 @@ public class PPModel extends SimActor {
 			System.out.println("PPModel::runSimulation: TIME STEP: " + currentTime);
 
 			cleanAndPlan(timeStepPartitions);
-
-			activateAndMove(timeStepPartitions);	
+			//Thread.sleep(50);
+			 try {
+                Thread.sleep(50);
+            } catch(InterruptedException e) {
+                return;
+            }
+			activateAndMove(timeStepPartitions);
+			//Thread.sleep(50);	
+			try {
+                Thread.sleep(50);
+            } catch(InterruptedException e) {
+                return;
+            }
 		}
 	}
 
@@ -160,11 +171,16 @@ public class PPModel extends SimActor {
 			
 			for (Animal an : predators) {
 				an.setXYPosition( an.getXCoord()+an.getDeltaX(), an.getYCoord()+an.getDeltaY() );
+				setChanged();
+            	notifyObservers();
 			}
 
 			for (Animal an : prey) {
 				an.setXYPosition( an.getXCoord()+an.getDeltaX(), an.getYCoord()+an.getDeltaY() );
+				setChanged();
+           	 	notifyObservers();
 			}
+			//Thread.sleep(50);
 		}
 		this.displayInfo(); //for state debug checking
 
