@@ -48,47 +48,40 @@ public class Animal extends SimActor
 	public void chooseNewDestination(double xLimit, double yLimit, double timeStepPartitions)
 	{		
 		Random rand = new Random();
-		rand.setSeed(System.currentTimeMillis());
+		rand.setSeed(System.nanoTime());
 		
-		//rand.setSeed(arg0); //to-do - add SEED value of time
-		
-		double distMoveX, distMoveY;
+		double distMove;
 		double newCoordX, newCoordY;
 		double randVal = rand.nextDouble();
 		
+		
 		//pick a new destination x coordinate 
-		// randVal = 2*rand.nextDouble()-1;
-		// distMoveX = randVal*maxDistTravel; //(randVal*2*maxDistTravel) - maxDistTravel;
-		// newCoordX = getXCoord()+distMoveX;
-
 		randVal = rand.nextDouble();
-		distMoveX = (randVal*2*maxDistTravel) - maxDistTravel; //(randVal*2*maxDistTravel) - maxDistTravel;
-		newCoordX = getXCoord()+distMoveX;
+		distMove = (randVal*2*maxDistTravel) - maxDistTravel;
+		newCoordX = getXCoord() + distMove;
 
-
-		if(newCoordX < 0)
-		{
-			newCoordX = getXCoord() + maxDistTravel;
+		//force move inward if next destination would be out of X bounds
+		if(newCoordX < 0) {
+			newCoordX = getXCoord() + Math.abs(distMove); //force more inward
 		}
-		else if( newCoordX > xLimit)
-		{
-			//System.out.println(" \n\t\tFAIL TEST2: "+newCoordX + " " + randVal + " " + distMoveX + " " + getXCoord()) ;
-			newCoordX = getXCoord() - maxDistTravel;
-			//System.out.println(" \t\tFAIL TEST2: "+newCoordX + " " + randVal + " " + distMoveX + " " + getXCoord()) ;
+		else if( newCoordX > xLimit) {
+			newCoordX = getXCoord() - Math.abs(distMove); //force more inward
 		}
-		//System.out.println(" \tTEST2: "+newCoordX + " | " + xLimit);
+		
 		
 		//pick a new destination y coordinate 
 		randVal = rand.nextDouble();
-		distMoveY = (randVal*2*maxDistTravel) - maxDistTravel;
-		newCoordY = getYCoord()+distMoveY;
-		if(newCoordY < 0 || newCoordY > yLimit)
-		{
-			newCoordY = getYCoord();
-		}
+		distMove = (randVal*2*maxDistTravel) - maxDistTravel;
+		newCoordY = getYCoord() + distMove;
 		
-		//System.out.println(" NEW coord ("+newCoordX+","+newCoordY+")");
-
+		//force move inward if next destination would be out of Y bounds
+		if(newCoordY < 0) {
+			newCoordY = getYCoord() + Math.abs(distMove); //force more inward
+		}
+		else if(newCoordY > yLimit) {
+			newCoordY = getYCoord() - Math.abs(distMove); //force move inward
+		}
+	
 		
 		//set the new x and y coordinate formally
 		setDestination(newCoordX, newCoordY, timeStepPartitions);

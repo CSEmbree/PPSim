@@ -13,13 +13,14 @@ import javax.swing.JPanel;
 public class Animation extends JPanel implements Observer {
 	static final double X_SIZE = 100.0;
 	static final double Y_SIZE = 100.0;
+	static final int SIM_DURATION = 20;
 
 	PPModel simulation;
 
 	// This initializes the simulation grid and all Predator and Prey objects
 	Animation(PPModel simulation) {
 		this.simulation = simulation;
-		setPreferredSize(new Dimension(400, 400)); //TODO: Change Dimensions to the state Finals
+		setPreferredSize(new Dimension((int)X_SIZE, (int)Y_SIZE));
 
 		for (Animal predators : simulation.predators) {
 			predators.addObserver(this);
@@ -61,7 +62,7 @@ public class Animation extends JPanel implements Observer {
 		// read from user?
 		int numPrey = 5;
 		int numPred = 5;
-		int simTime = 10;
+		int simTime = SIM_DURATION;
 		double xFieldSize = X_SIZE;
 		double yFieldSize = Y_SIZE;
 

@@ -127,12 +127,15 @@ public class SimActor extends Observable
 	
 	public double getXDistToTravel()
 	{
-		return Math.abs(destX-x);
+		//return Math.abs(this.destX - this.x);
+		return (this.destX - this.x);
+
 	}
 	
 	public double getYDistToTravel()
 	{
-		return Math.abs(destY-y);
+		//return Math.abs(this.destY - this.y);
+		return (this.destY - this.y);
 	}
 	
 	public double getDistToTravel()

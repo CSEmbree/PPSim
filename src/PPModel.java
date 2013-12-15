@@ -1,5 +1,6 @@
 //Cameron Embree, Gradon Faulkner
 import java.sql.Time;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,6 +21,8 @@ public class PPModel extends SimActor {
 
 	double xSize = 100.0; // max x dimention of simulation (x=0, 1,...,xSize)
 	double ySize = 100.0; // max y dimention of simulation (y=0, 1,...,ySize)
+	DecimalFormat df = new DecimalFormat("#.00");
+	
 
 	public PPModel() {
 		this(0, 0, 100.0, 100.0);
@@ -50,10 +53,9 @@ public class PPModel extends SimActor {
 		}
 
 		Random rand = new Random();
-		rand.setSeed(System.currentTimeMillis());
+		rand.setSeed(System.nanoTime());
 
-		// int randPosX = rand.nextInt((int)xSize);
-		// int randPosY = rand.nextInt((int)ySize);
+		
 
 		// create that number of preds and prey
 		double xPos, yPos, energy, maxDistTravel;
@@ -63,7 +65,7 @@ public class PPModel extends SimActor {
 			String id = predType + "_" + predName;
 			String predSpecies = "great white";
 			energy = 100.0;
-			maxDistTravel = 20.0;
+			maxDistTravel = 50.0; //predators cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
 
@@ -79,7 +81,7 @@ public class PPModel extends SimActor {
 			String id = preyType + "_" + preyName;
 			String preySpecies = "gold fish";
 			energy = 100;
-			maxDistTravel = 10;
+			maxDistTravel = 25.0; //prey cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
 
@@ -171,21 +173,22 @@ public class PPModel extends SimActor {
 
 			for (Animal an : predators) {
 				an.setXYPosition(an.getXCoord() + an.getDeltaX(), an.getYCoord() + an.getDeltaY());
-
 			}
 
 			for (Animal an : prey) {
 				an.setXYPosition(an.getXCoord() + an.getDeltaX(),an.getYCoord() + an.getDeltaY());
 			}
+			
+			//Time delay for smooth movement on GUI
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				return;
+			}
 		}
 		this.displayInfo(); // for state debug checking
 
 		System.out.println("PPModel::activateAndMove: Stopping moving things...");
-		try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				return;
-			}
 	}
 
 	public double getXCoordSize() {
@@ -215,14 +218,14 @@ public class PPModel extends SimActor {
 	public void displayPredInfo() {
 		for (Animal an : predators) {
 			System.out.println("\tPred Name:" + an.getName() + " at position ("
-					+ an.getXCoord() + "," + an.getYCoord() + ")");
+					+ df.format(an.getXCoord()) + "," + df.format(an.getYCoord()) + ")");
 		}
 	}
 
 	public void displayPreyInfo() {
 		for (Animal an : prey) {
 			System.out.println("\tPrey Name:" + an.getName() + " at position ("
-					+ an.getXCoord() + "," + an.getYCoord() + ")");
+					+ df.format(an.getXCoord()) + "," + df.format(an.getYCoord()) + ")");
 		}
 	}
 
