@@ -1,11 +1,8 @@
 //Cameron Embree, Gradon Faulkner
-import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.sun.tools.javac.comp.Check;
-import com.sun.tools.javadoc.Messager.ExitJavadoc;
 
 public class PPModel extends SimActor {
 	// private final double DEF_PRED_SIZE = 10;
@@ -214,17 +211,13 @@ public class PPModel extends SimActor {
 				if( predAn.canSee(preyAn) && preyAn.getLifeStatus()==true && predAn.isHungry()==true ) {
 					//System.exit(0); //TEST
 					
-					
 					//TODO - set appropriate location for pred to move toward prey
 					
 					//predAn.setDestination(predAn.getXCoord(), predAn.getYCoord(), timeStepPartitions);
-					
-					//predAn.setXYPosition(predAn.getXCoord() + predAn.getDeltaX(), predAn.getYCoord() + predAn.getDeltaY());
-
 				}
 			}
 			
-			predAn.displayLifeState(); //TEST
+			predAn.displayLifeState(); //TEST - temporary TODO - remove this when done testing pred to prey movement
 		}
 		//System.exit(0); //TEST
 	}
