@@ -87,6 +87,8 @@ public class Animal extends SimActor
 	{
 		super.setX(x);
 		super.setY(y);
+		setChanged(); 		//This is the code that calls the Update method for GUI 
+		notifyObservers();	//
 	}
 	
 	public void setDestination(double xDest, double yDest)

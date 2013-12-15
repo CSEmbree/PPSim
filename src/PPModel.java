@@ -100,15 +100,16 @@ public class PPModel extends SimActor {
 
 			cleanAndPlan(timeStepPartitions);
 
+			//Time Delay for Movement on GUI
 			try {
-				// System.out.println("PPModel::runSimulation: CHECKING TIME DELAY TRY");
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// System.out.println("PPModel::runSimulation: CHECKING TIME DELAY CATCH");
 				return;
 			}
-			activateAndMove(timeStepPartitions);
 
+			activateAndMove(timeStepPartitions);
+			
+			//Time Delay for Movement on GUI
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -166,32 +167,16 @@ public class PPModel extends SimActor {
 
 		// TODO - account for delta move and add in steps
 		for (int i = 0; i < timeStepPartitions; i++) {
-			// System.out.println("PPModel::activateAndMove: Partial Iteration "+i+" of "+timeStepPartitions);
+			 //System.out.println("PPModel::activateAndMove: Partial Iteration "+i+" of "+timeStepPartitions);
 
 			for (Animal an : predators) {
-				an.setXYPosition(an.getXCoord() + an.getDeltaX(),
-						an.getYCoord() + an.getDeltaY());
-				setChanged();
-				notifyObservers();
-				// try {
-				// 	Thread.sleep(500);
-				// } catch (InterruptedException e) {
-				// 	return;
-				// }
+				an.setXYPosition(an.getXCoord() + an.getDeltaX(), an.getYCoord() + an.getDeltaY());
+
 			}
 
 			for (Animal an : prey) {
-				an.setXYPosition(an.getXCoord() + an.getDeltaX(),
-						an.getYCoord() + an.getDeltaY());
-				setChanged();
-				notifyObservers();
-				// try {
-				// 	Thread.sleep(500);
-				// } catch (InterruptedException e) {
-				// 	return;
-				// }
+				an.setXYPosition(an.getXCoord() + an.getDeltaX(),an.getYCoord() + an.getDeltaY());
 			}
-			// Thread.sleep(50);
 		}
 		this.displayInfo(); // for state debug checking
 

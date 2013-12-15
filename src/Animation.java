@@ -9,8 +9,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-//Needs to have code convereted to run with correct classes
-//This should be the 'main' for the program
+
 public class Animation extends JPanel implements Observer {
 	static final double X_SIZE = 100.0;
 	static final double Y_SIZE = 100.0;
@@ -20,9 +19,7 @@ public class Animation extends JPanel implements Observer {
 	// This initializes the simulation grid and all Predator and Prey objects
 	Animation(PPModel simulation) {
 		this.simulation = simulation;
-		setPreferredSize(new Dimension(400, 400));
-
-		// simulation.predators
+		setPreferredSize(new Dimension(400, 400)); //TODO: Change Dimensions to the state Finals
 
 		for (Animal predators : simulation.predators) {
 			predators.addObserver(this);
@@ -32,58 +29,31 @@ public class Animation extends JPanel implements Observer {
 		}
 	}
 
+	//Necessary Update Override to update movement on GUI
 	@Override
 	public void update(Observable o, Object arg) {
 		Animal animal = (Animal) o;
-		repaint((int) animal.getXDest(), (int) animal.getYDest(), 10, 10);
-		// Blob blob = (Blob)o;
-		// repaint(blob.x, blob.y, 24, 24);
-		// repaint(blob.x - 12, blob.y - 12, 24, 24);
+		repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
 	}
 
+	//Used to add the initial components for GUI. Adds the number of Prey/Predators on Grid
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		for (Animal predators : simulation.predators) {
 			// predators.addObserver(this);
-			Color color = Color.getHSBColor(102, 102, 102);
+			Color color = Color.getHSBColor(102, 102, 102); // Color for Predators - Black 
 			g.setColor(color);
-			g.fillOval((int) predators.getXDest(), (int) predators.getYDest(),
-					10, 10);
+			g.fillOval((int) predators.getXCoord(), (int) predators.getYCoord(),
+					10, 10); //Sets size of GUI Representations of Predators
 		}
 
 		for (Animal prey : simulation.prey) {
-			Color color = Color.getHSBColor(255, 204, 0);
+			Color color = Color.getHSBColor(255, 204, 0); // Color for Prey - Yellow 
 			g.setColor(color);
-			g.fillOval((int) prey.getXDest(), (int) prey.getYDest(), 10, 10);
+			g.fillOval((int) prey.getXCoord(), (int) prey.getYCoord(), 10, 10); //Sets size of GUI Representations of Prey
 		}
 	}
-
-	/*
-	 * // Necesary to update the predator and prey after each game tick
-	 * 
-	 * @Override public void update(Observable o, Object arg) { Blob blob =
-	 * (Blob)o; repaint(blob.x, blob.y, 24, 24); //repaint(blob.x - 12, blob.y -
-	 * 12, 24, 24); }
-	 * 
-	 * // Necesary to update the predator and prey after each game tick public
-	 * void paintComponent(Graphics g) { super.paintComponent(g);
-	 * 
-	 * for(Blob blob : simulation.blobs) { g.setColor(blob.color);
-	 * g.fillOval(blob.x, blob.y, 20, 20); //g.fillOval(blob.x - 10, blob.y -
-	 * 10, 20, 20); } }
-	 */
-	// public static void main(String[] args) {
-	// Simulation simulation = new Simulation();
-
-	// JFrame frame = new JFrame();
-	// frame.getContentPane().add(new Animation(simulation));
-	// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	// frame.pack();
-	// frame.setVisible(true);
-
-	// simulation.simulate();
-	// }
 
 	public static void main(String[] args) {
 		System.out.println("simulation::main: Begining main...");
@@ -102,6 +72,7 @@ public class Animation extends JPanel implements Observer {
 		PPModel model = sim.prepSimulation(numPred, numPrey, xFieldSize,
 				yFieldSize);
 
+		//Sets up the Frame for the GUI and Movements of the Simulation
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(new Animation(model));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,18 +83,6 @@ public class Animation extends JPanel implements Observer {
 		sim.runSimulation(model, simTime, timeStepPartitions);
 
 		System.out.println("simulation::main: Exiting main.");
-
-		// ============This needs to be modified for Simulation====
-		/*
-		 * Simulation simulation = new Simulation();
-		 * 
-		 * JFrame frame = new JFrame(); frame.getContentPane().add(new
-		 * Animation(simulation));
-		 * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); frame.pack();
-		 * frame.setVisible(true);
-		 * 
-		 * simulation.simulate();
-		 */
 
 	}
 
