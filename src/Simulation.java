@@ -7,9 +7,7 @@ public class Simulation
 //	static final double Y_SIZE = 100.0;
 	
 	
-	
-	public PPModel prepSimulation(int numPred, int numPrey, double xSize, double ySize)
-	{
+	public PPModel prepSimulation(int numPred, int numPrey, double xSize, double ySize) {
 		System.out.println("simulation::prepSimulation: setting up model with: numPred: "+numPred+", numPrey: "+numPrey);
 		
 		PPModel model = new PPModel(numPred, numPrey, xSize, ySize);
@@ -18,16 +16,11 @@ public class Simulation
 	}
 	
 	
-	void runSimulation( PPModel sim, int time, double timeStepPartitions)
-	{
-
+	void runSimulation( PPModel sim, int time, double timeStepPartitions) {
 		System.out.println("simulation::runSimulation: Running model with time: " + time);
 		
 		sim.runSimulation( time, timeStepPartitions );
 		
 		System.out.println("simulation::runSimulation: Finsihed running model with time: " + time);
 	}
-	
-	
-	
 }

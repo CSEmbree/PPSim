@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.sun.tools.javac.comp.Check;
+import com.sun.tools.javadoc.Messager.ExitJavadoc;
+
 public class PPModel extends SimActor {
 	// private final double DEF_PRED_SIZE = 10;
 	// private final double DEF_PREY_SIZE = 10;
@@ -58,19 +61,22 @@ public class PPModel extends SimActor {
 		
 
 		// create that number of preds and prey
-		double xPos, yPos, energy, maxDistTravel;
+		double xPos, yPos, energy, visionRange, maxDistTravel;
+		//String name, type, id, species;
+		
 		for (int i = 0; i < this.numPred; i++) {
 			String predName = "shark" + i;
 			String predType = "predator";
 			String id = predType + "_" + predName;
 			String predSpecies = "great white";
 			energy = 100.0;
+			visionRange = 50.0; //how far a predator can see for prey
 			maxDistTravel = 50.0; //predators cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
 
 			Shark predShark = new Shark(id, predName, predType, predSpecies,
-					energy, maxDistTravel, xPos, yPos);
+					energy, visionRange, maxDistTravel, xPos, yPos);
 
 			predators.add(predShark);
 		}
@@ -81,12 +87,13 @@ public class PPModel extends SimActor {
 			String id = preyType + "_" + preyName;
 			String preySpecies = "gold fish";
 			energy = 100;
+			visionRange = 25.0;
 			maxDistTravel = 25.0; //prey cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
 
 			Fish preyFish = new Fish(id, preyName, preyType, preySpecies,
-					energy, maxDistTravel, xPos, yPos);
+					energy, visionRange, maxDistTravel, xPos, yPos);
 
 			prey.add(preyFish);
 		}
@@ -140,8 +147,7 @@ public class PPModel extends SimActor {
 		}
 
 		for (int currentActorIndex = 0; currentActorIndex < predators.size(); currentActorIndex++) {
-			predators.get(currentActorIndex).chooseNewDestination(xSize, ySize,
-					timeStepPartitions);
+			predators.get(currentActorIndex).chooseNewDestination(xSize, ySize, timeStepPartitions);
 		}
 
 		// remove any dead prey and determine their next move
@@ -158,9 +164,11 @@ public class PPModel extends SimActor {
 		}
 
 		for (int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++) {
-			prey.get(currentActorIndex).chooseNewDestination(xSize, ySize,
-					timeStepPartitions);
+			prey.get(currentActorIndex).chooseNewDestination(xSize, ySize, timeStepPartitions);
 		}
+		
+		//setChanged(); 		//This is the code that calls the Update method for GUI 
+		//notifyObservers();	//
 	}
 
 	private void activateAndMove(double timeStepPartitions) {
@@ -171,6 +179,8 @@ public class PPModel extends SimActor {
 		for (int i = 0; i < timeStepPartitions; i++) {
 			 //System.out.println("PPModel::activateAndMove: Partial Iteration "+i+" of "+timeStepPartitions);
 
+			this.checkforNearbyPrey(timeStepPartitions);
+			
 			for (Animal an : predators) {
 				an.setXYPosition(an.getXCoord() + an.getDeltaX(), an.getYCoord() + an.getDeltaY());
 			}
@@ -179,6 +189,8 @@ public class PPModel extends SimActor {
 				an.setXYPosition(an.getXCoord() + an.getDeltaX(),an.getYCoord() + an.getDeltaY());
 			}
 			
+			//TODO - consume resources if pred is close enough to prey and hungry, etc
+			
 			//Time delay for smooth movement on GUI
 			try {
 				Thread.sleep(5);
@@ -186,9 +198,45 @@ public class PPModel extends SimActor {
 				return;
 			}
 		}
+		
+		//TODO - remove energy based on movement distance
+		//remove energy based on movement
+		this.removeEnergyForMove(10.0);
+		
 		this.displayInfo(); // for state debug checking
 
 		System.out.println("PPModel::activateAndMove: Stopping moving things...");
+	}
+	
+	private void checkforNearbyPrey(double timeStepPartitions) {
+		for (Animal predAn : predators) {
+			for (Animal preyAn : prey) {
+				if( predAn.canSee(preyAn) && preyAn.getLifeStatus()==true && predAn.isHungry()==true ) {
+					//System.exit(0); //TEST
+					
+					
+					//TODO - set appropriate location for pred to move toward prey
+					
+					//predAn.setDestination(predAn.getXCoord(), predAn.getYCoord(), timeStepPartitions);
+					
+					//predAn.setXYPosition(predAn.getXCoord() + predAn.getDeltaX(), predAn.getYCoord() + predAn.getDeltaY());
+
+				}
+			}
+			
+			predAn.displayLifeState(); //TEST
+		}
+		//System.exit(0); //TEST
+	}
+	
+	private void removeEnergyForMove(double energy) {
+		for (Animal an : prey) {
+			an.removeEnergy(energy);
+		}
+		
+		for (Animal an : predators) {
+			an.removeEnergy(energy);
+		}
 	}
 
 	public double getXCoordSize() {
