@@ -18,8 +18,8 @@ public class PPModel extends SimActor {
 	int numPrey = 0; // number of predators in the simulation currently,
 						// convenience variable
 
-	double xSize = 0.0; // max x dimention of simulation (x=0, 1,...,xSize)
-	double ySize = 0.0; // max y dimention of simulation (y=0, 1,...,ySize)
+	double xSize = 100.0; // max x dimention of simulation (x=0, 1,...,xSize)
+	double ySize = 100.0; // max y dimention of simulation (y=0, 1,...,ySize)
 
 	public PPModel() {
 		this(0, 0, 100.0, 100.0);
@@ -108,7 +108,7 @@ public class PPModel extends SimActor {
 			}
 
 			activateAndMove(timeStepPartitions);
-			
+
 			//Time Delay for Movement on GUI
 			try {
 				Thread.sleep(500);
@@ -180,8 +180,12 @@ public class PPModel extends SimActor {
 		}
 		this.displayInfo(); // for state debug checking
 
-		System.out
-				.println("PPModel::activateAndMove: Stopping moving things...");
+		System.out.println("PPModel::activateAndMove: Stopping moving things...");
+		try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				return;
+			}
 	}
 
 	public double getXCoordSize() {

@@ -57,24 +57,35 @@ public class Animal extends SimActor
 		double randVal = rand.nextDouble();
 		
 		//pick a new destination x coordinate 
-		randVal = rand.nextDouble();
-		distMoveX = (randVal*2*maxDistTravel) - maxDistTravel;
-		newCoordX = getXCoord()+distMoveX;
-		//System.out.println(" TEST1: "+newCoordX);
+		// randVal = 2*rand.nextDouble()-1;
+		// distMoveX = randVal*maxDistTravel; //(randVal*2*maxDistTravel) - maxDistTravel;
+		// newCoordX = getXCoord()+distMoveX;
 
-		if(newCoordX < 0 || newCoordX > xLimit)
-			newCoordX = getXCoord();
-		
-		
-		//System.out.println(" TEST2: "+newCoordX);
+		randVal = rand.nextDouble();
+		distMoveX = (randVal*2*maxDistTravel) - maxDistTravel; //(randVal*2*maxDistTravel) - maxDistTravel;
+		newCoordX = getXCoord()+distMoveX;
+
+
+		if(newCoordX < 0)
+		{
+			newCoordX = getXCoord() + maxDistTravel;
+		}
+		else if( newCoordX > xLimit)
+		{
+			//System.out.println(" \n\t\tFAIL TEST2: "+newCoordX + " " + randVal + " " + distMoveX + " " + getXCoord()) ;
+			newCoordX = getXCoord() - maxDistTravel;
+			//System.out.println(" \t\tFAIL TEST2: "+newCoordX + " " + randVal + " " + distMoveX + " " + getXCoord()) ;
+		}
+		//System.out.println(" \tTEST2: "+newCoordX + " | " + xLimit);
 		
 		//pick a new destination y coordinate 
 		randVal = rand.nextDouble();
 		distMoveY = (randVal*2*maxDistTravel) - maxDistTravel;
 		newCoordY = getYCoord()+distMoveY;
 		if(newCoordY < 0 || newCoordY > yLimit)
+		{
 			newCoordY = getYCoord();
-		
+		}
 		
 		//System.out.println(" NEW coord ("+newCoordX+","+newCoordY+")");
 
