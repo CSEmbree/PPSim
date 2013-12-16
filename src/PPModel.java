@@ -14,6 +14,8 @@ public class PPModel extends SimActor {
 																	// simulation
 	public ArrayList<Animal> prey = new ArrayList<Animal>(); // set of all prey
 																// in simulation
+	public ArrayList<Animal> deadAnimals = new ArrayList<Animal>();
+	
 	int numPred = 0; // number of prey in the simulation currently, convenience
 						// variable
 	int numPrey = 0; // number of predators in the simulation currently,
@@ -21,7 +23,7 @@ public class PPModel extends SimActor {
 
 	double xSize = 100.0; // max x dimention of simulation (x=0, 1,...,xSize)
 	double ySize = 100.0; // max y dimention of simulation (y=0, 1,...,ySize)
-	DecimalFormat df = new DecimalFormat("#.00");
+	DecimalFormat df = new DecimalFormat("#.00"); //for nice formatting of local double's
 	
 
 	public PPModel() {
@@ -34,22 +36,24 @@ public class PPModel extends SimActor {
 		this.setNumPrey(numPrey);
 
 		// set size for field of play
-		if (xSize > 0.0)
+		if (xSize > 0.0) {
 			this.setXSize(xSize);
+		}
 		else {
 			System.out
 					.println("PPModel::PPModel: ERROR: An invalid value for xSize= "
 							+ xSize + " was enountered. xSize must be >= 1.");
-			System.exit(0); // exit gracefully
+			System.exit(0); // exit gracefully on error
 		}
 
-		if (ySize > 0.0)
+		if (ySize > 0.0) {
 			this.setYSize(ySize);
+		}
 		else {
 			System.out
 					.println("PPModel::PPModel: ERROR: An invalid value for ySize= "
 							+ ySize + " was enountered. xSize must be >= 1.");
-			System.exit(0); // exit gracefully
+			System.exit(0); // exit gracefully on error
 		}
 
 		Random rand = new Random();
@@ -128,6 +132,7 @@ public class PPModel extends SimActor {
 		System.out
 				.println("PPModel::cleanAndPlan: Cleaning updating any dead actors and deciding their next move");
 		boolean removed;
+		Animal deadAnimal;
 
 		// remove any dead predators and determine their next move
 		removed = true;
@@ -136,7 +141,9 @@ public class PPModel extends SimActor {
 			for (int currentActorIndex = 0; currentActorIndex < predators
 					.size(); currentActorIndex++) {
 				if (predators.get(currentActorIndex).getEnergy() <= 0) {
-					predators.remove(currentActorIndex);
+					deadAnimal = predators.remove(currentActorIndex);
+					deadAnimals.add( deadAnimal );
+					
 					removed = true; // if clean up was performed, run the whole
 									// loop again
 				}
@@ -153,7 +160,9 @@ public class PPModel extends SimActor {
 			removed = false;
 			for (int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++) {
 				if (prey.get(currentActorIndex).getEnergy() <= 0) {
-					prey.remove(currentActorIndex);
+					deadAnimal = prey.remove(currentActorIndex);
+					deadAnimals.add( deadAnimal );
+					
 					removed = true; // if clean up was performed, run the whole
 									// loop again
 				}
@@ -164,26 +173,50 @@ public class PPModel extends SimActor {
 			prey.get(currentActorIndex).chooseNewDestination(xSize, ySize, timeStepPartitions);
 		}
 		
+		//TODO - update dead animals here?
 		//setChanged(); 		//This is the code that calls the Update method for GUI 
 		//notifyObservers();	//
+		
+		System.out.println("TEST: DEAD COUNT: "+deadAnimals.size()); //TEST - make sure dead are accounted for
+		for (Animal an : deadAnimals) {
+			an.displayInfo();
+		}
 	}
 
 	private void activateAndMove(double timeStepPartitions) {
-		System.out
-				.println("PPModel::activateAndMove: Starting to move things...");
+		System.out.println("PPModel::activateAndMove: Starting to move things...");
 
-		// TODO - account for delta move and add in steps
+		
+		double oldXCoord, oldYCoord, newXCoord, newYCoord, distTravel;
+		
+		// TODO - account for delta move's energy consumption
 		for (int i = 0; i < timeStepPartitions; i++) {
 			 //System.out.println("PPModel::activateAndMove: Partial Iteration "+i+" of "+timeStepPartitions);
 
 			this.checkforNearbyPrey(timeStepPartitions);
 			
 			for (Animal an : predators) {
-				an.setXYPosition(an.getXCoord() + an.getDeltaX(), an.getYCoord() + an.getDeltaY());
+				oldXCoord = an.getXCoord();
+				oldYCoord = an.getYCoord();
+				newXCoord = oldXCoord + an.getDeltaX();
+				newYCoord = oldYCoord + an.getDeltaY();
+				
+				an.setXYPosition(newXCoord, newYCoord);
+				
+				distTravel = an.distance(oldXCoord, oldYCoord, newXCoord, newYCoord);
+				an.removeEnergyFromTravel(distTravel); //TODO - need this but must be balanced
 			}
 
 			for (Animal an : prey) {
-				an.setXYPosition(an.getXCoord() + an.getDeltaX(),an.getYCoord() + an.getDeltaY());
+				oldXCoord = an.getXCoord();
+				oldYCoord = an.getYCoord();
+				newXCoord = oldXCoord + an.getDeltaX();
+				newYCoord = oldYCoord + an.getDeltaY();
+				
+				an.setXYPosition(newXCoord, newYCoord);
+				
+				distTravel = an.distance(oldXCoord, oldYCoord, newXCoord, newYCoord);
+				an.removeEnergyFromTravel(distTravel); //TODO - need this but must be balanced
 			}
 			
 			//TODO - consume resources if pred is close enough to prey and hungry, etc
@@ -198,7 +231,7 @@ public class PPModel extends SimActor {
 		
 		//TODO - remove energy based on movement distance
 		//remove energy based on movement
-		this.removeEnergyForMove(10.0);
+		this.removeEnergy(10.0); //TODO - remove this temporary testing energy removal funct
 		
 		this.displayInfo(); // for state debug checking
 
@@ -212,7 +245,6 @@ public class PPModel extends SimActor {
 					//System.exit(0); //TEST
 					
 					//TODO - set appropriate location for pred to move toward prey
-					
 					//predAn.setDestination(predAn.getXCoord(), predAn.getYCoord(), timeStepPartitions);
 				}
 			}
@@ -222,7 +254,8 @@ public class PPModel extends SimActor {
 		//System.exit(0); //TEST
 	}
 	
-	private void removeEnergyForMove(double energy) {
+	
+	private void removeEnergy(double energy) {
 		for (Animal an : prey) {
 			an.removeEnergy(energy);
 		}

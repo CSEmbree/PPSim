@@ -183,6 +183,18 @@ public class Animal extends SimActor
 		updateLifeStatus();
 	}
 	
+	//TODO - balance energy removal based on distance traveled
+	//currently - every 10 units is 1 energy
+	public double removeEnergyFromTravel(double distTravel) {
+		double energyToRemove = 0.0;
+		
+		energyToRemove = Math.abs(distTravel) / 10.0; //<----Needs Balancing
+		
+		removeEnergy(energyToRemove);
+		
+		return energyToRemove;
+	}
+	
 	public boolean canSee(Animal an) {
 		
 		if( this.distance(this.getXCoord(), this.getYCoord(), an.getXCoord(), an.getYCoord()) <= this.getVisionRange()) {
@@ -270,7 +282,7 @@ public class Animal extends SimActor
 		System.out.println("Animal: Name: \t\t"+this.name
 				+"\n\tType: \t\t"+this.type
 				+"\n\tState: \t\t"+this.state+", ("+this.energy+")"
-				+"\n\tAlive: \t"+this.alive);
+				+"\n\tAlive: \t\t"+this.alive);
 	}
 	
 	public void displayInfo()
@@ -281,6 +293,6 @@ public class Animal extends SimActor
 				+"\n\tEnergy: \t"+this.energy
 				+"\n\tVisionRange: \t"+this.visionRange
 				+"\n\tMaxDistTravel: \t"+this.maxDistTravel
-				+"\n\tAlive: \t"+this.alive);
+				+"\n\tAlive: \t\t"+this.alive);
 	}	
 }
