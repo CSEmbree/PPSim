@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 
 
 public class Animation extends JPanel implements Observer {
-	static final double X_SIZE = 100.0;
-	static final double Y_SIZE = 100.0;
+	static final double X_SIZE = 500.0;
+	static final double Y_SIZE = 500.0;
 	static final int SIM_DURATION = 20;
 
 	PPModel simulation;
@@ -34,7 +34,18 @@ public class Animation extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Animal animal = (Animal) o;
-		repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
+		// if(animal.getLifeStatus() == true)
+		// {
+		// 	repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
+		// }
+		// else
+		// {
+		// 	//repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
+		// 	repaint();
+		// }
+
+			repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
+
 	}
 
 	//Used to add the initial components for GUI. Adds the number of Prey/Predators on Grid
@@ -44,15 +55,21 @@ public class Animation extends JPanel implements Observer {
 		for (Animal predators : simulation.predators) {
 			// predators.addObserver(this);
 			Color color = Color.getHSBColor(102, 102, 102); // Color for Predators - Black 
-			g.setColor(color);
+			g.setColor(Color.red);
 			g.fillOval((int) predators.getXCoord(), (int) predators.getYCoord(),
 					10, 10); //Sets size of GUI Representations of Predators
 		}
 
 		for (Animal prey : simulation.prey) {
 			Color color = Color.getHSBColor(255, 204, 0); // Color for Prey - Yellow 
-			g.setColor(color);
+			g.setColor(Color.green);
 			g.fillOval((int) prey.getXCoord(), (int) prey.getYCoord(), 10, 10); //Sets size of GUI Representations of Prey
+		}
+		for(Animal dead : simulation.deadAnimals)
+		{
+			Color color = Color.getHSBColor(255, 0, 0); // Color for Prey - Yellow 
+			g.setColor(Color.black);
+			g.fillOval((int) dead.getXCoord(), (int) dead.getYCoord(), 10, 10); //Sets size of GUI Representations of Prey
 		}
 	}
 
