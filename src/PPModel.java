@@ -143,7 +143,7 @@ public class PPModel extends SimActor {
 				if (predators.get(currentActorIndex).getEnergy() <= 0) {
 					deadAnimal = predators.remove(currentActorIndex);
 					deadAnimals.add( deadAnimal );
-					
+					deadAnimals.get(deadAnimals.size()-1).setXYPosition(deadAnimals.get(deadAnimals.size()-1).getXCoord(),deadAnimals.get(deadAnimals.size()-1).getYCoord() );
 					removed = true; // if clean up was performed, run the whole
 									// loop again
 				}
@@ -160,9 +160,10 @@ public class PPModel extends SimActor {
 			removed = false;
 			for (int currentActorIndex = 0; currentActorIndex < prey.size(); currentActorIndex++) {
 				if (prey.get(currentActorIndex).getEnergy() <= 0) {
+					prey.get(currentActorIndex).setXYPosition(prey.get(currentActorIndex).getXCoord()+0.1 , prey.get(currentActorIndex).getYCoord()+0.1);
 					deadAnimal = prey.remove(currentActorIndex);
 					deadAnimals.add( deadAnimal );
-					
+					deadAnimals.get(deadAnimals.size()-1).setXYPosition(deadAnimals.get(deadAnimals.size()-1).getXCoord(),deadAnimals.get(deadAnimals.size()-1).getYCoord() );  
 					removed = true; // if clean up was performed, run the whole
 									// loop again
 				}
@@ -181,6 +182,7 @@ public class PPModel extends SimActor {
 		for (Animal an : deadAnimals) {
 			an.displayInfo();
 		}
+		
 	}
 
 	private void activateAndMove(double timeStepPartitions) {
@@ -245,7 +247,7 @@ public class PPModel extends SimActor {
 					//System.exit(0); //TEST
 					
 					//TODO - set appropriate location for pred to move toward prey
-					//predAn.setDestination(predAn.getXCoord(), predAn.getYCoord(), timeStepPartitions);
+					predAn.setDestination(preyAn.getXCoord(), preyAn.getYCoord(), timeStepPartitions);
 				}
 			}
 			
