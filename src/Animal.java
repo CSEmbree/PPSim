@@ -219,7 +219,7 @@ public class Animal extends SimActor
 	}
 	
 	private double getConsumptionEnergy() {
-		return this.getEnergy();// + 25.0; //TODO - Set appropriate energy consumption amount
+		return this.getEnergy() * 0.5;// + 25.0; //TODO - Set appropriate energy consumption amount
 	}
 	
 	public void consumeOther(Animal otherAn) {
