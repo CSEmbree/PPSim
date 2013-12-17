@@ -193,11 +193,11 @@ public class Animal extends SimActor
 	}
 	
 	//TODO - balance energy removal based on distance traveled
-	//currently - every 10 units is 1 energy
+	//currently - every 15 units is 1 energy
 	public double removeEnergyFromTravel(double distTravel) {
 		double energyToRemove = 0.0;
 		
-		energyToRemove = Math.abs(distTravel) / 10.0; //<----Needs Balancing
+		energyToRemove = Math.abs(distTravel) / 15.0; //<----Needs Balancing
 		
 		removeEnergy(energyToRemove);
 		
@@ -219,11 +219,21 @@ public class Animal extends SimActor
 	}
 	
 	private double getConsumptionEnergy() {
-		return this.getEnergy()*0.50; //TODO - Set appropriate energy consumption amount
+		return this.getEnergy();// + 25.0; //TODO - Set appropriate energy consumption amount
 	}
 	
-	public void consume(Animal otherAn) {
+	public void consumeOther(Animal otherAn) {
 		this.addEnergy(otherAn.getConsumptionEnergy());
+	}
+	
+	public void consumePlant() {
+		Random rand = new Random();
+		rand.setSeed(System.nanoTime());
+		
+		double energyGainFromPlant = 2.5; //minimum additional energy gained
+		//energyGainFromPlant += rand.nextInt((int) energyGainFromPlant); //occational more energy from big plant
+		
+		this.addEnergy(energyGainFromPlant);
 	}
 	
 	private void addEnergy(double energy) {

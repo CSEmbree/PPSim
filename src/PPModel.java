@@ -69,8 +69,8 @@ public class PPModel extends SimActor {
 			String id = predType + "_" + predName;
 			String predSpecies = "great white";
 			energy = 100.0;
-			visionRange = 50.0; //how far a predator can see for prey
-			maxDistTravel = 75.0; //predators cannot move any farther than this <------------
+			visionRange = 75.0; //how far a predator can see for prey
+			maxDistTravel = 100.0; //predators cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
 
@@ -86,7 +86,7 @@ public class PPModel extends SimActor {
 			String id = preyType + "_" + preyName;
 			String preySpecies = "gold fish";
 			energy = 100;
-			visionRange = 25.0;
+			visionRange = 50.0;
 			maxDistTravel = 25.0; //prey cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
@@ -109,20 +109,20 @@ public class PPModel extends SimActor {
 			cleanAndPlan(timeStepPartitions);
 
 			//Time Delay for Movement on GUI
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				return;
-			}
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				return;
+//			}
 
 			activateAndMove(timeStepPartitions);
 
 			//Time Delay for Movement on GUI
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				return;
-			}
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				return;
+//			}
 		}
 	}
 
@@ -222,15 +222,21 @@ public class PPModel extends SimActor {
 			
 			//Time delay for smooth movement on GUI
 			try {
-				Thread.sleep(5);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				return;
 			}
 		}
 		
+		//prey gain a little energy after each movement from grazing
+		for (Animal preyAn : prey) {
+			if(preyAn.getLifeStatus() == true)
+				preyAn.consumePlant();
+		}
+		
 		//TODO - remove energy based on movement distance
 		//remove energy based on movement
-		this.removeEnergy(10.0); //TODO - remove this temporary testing energy removal funct
+		//this.removeEnergy(10.0); //TODO - remove this temporary testing energy removal funct
 		
 		this.displayInfo(); // for state debug checking
 
@@ -244,7 +250,7 @@ public class PPModel extends SimActor {
 					//System.exit(0); //TEST
 					
 					if( predAn.inConsumptionRange(preyAn) ) {
-						predAn.consume(preyAn);
+						predAn.consumeOther(preyAn);
 						preyAn.setIsComsumed();
 					}
 
@@ -258,7 +264,7 @@ public class PPModel extends SimActor {
 		//System.exit(0); //TEST
 	}
 	
-	
+	//temporary test function to test death of animals from loss of energy
 	private void removeEnergy(double energy) {
 		for (Animal an : prey) {
 			an.removeEnergy(energy);

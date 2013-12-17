@@ -9,9 +9,13 @@ import javax.swing.JPanel;
 
 
 public class Animation extends JPanel implements Observer {
-	static final double X_SIZE = 300.0;
-	static final double Y_SIZE = 300.0;
-	static final int SIM_DURATION = 20;
+	static final double X_SIZE = 500.0;
+	static final double Y_SIZE = 500.0;
+	static final int SIM_DURATION = 40;
+	
+	static final int NUM_PREY = 20;
+	static final int NUM_PRED = 10;
+	
 	JFrame frame = new JFrame();
 	PPModel simulation;
 
@@ -72,8 +76,8 @@ public class Animation extends JPanel implements Observer {
 		System.out.println("simulation::main: Begining main...");
 
 		// read from user?
-		int numPrey = 5;
-		int numPred = 5;
+		int numPrey = NUM_PREY;
+		int numPred = NUM_PRED;
 		int simTime = SIM_DURATION;
 		double xFieldSize = X_SIZE;
 		double yFieldSize = Y_SIZE;
