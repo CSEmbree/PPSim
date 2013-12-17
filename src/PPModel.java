@@ -245,7 +245,7 @@ public class PPModel extends SimActor {
 			for (Animal preyAn : prey) {
 				if( predAn.canSee(preyAn) && preyAn.getLifeStatus()==true && predAn.isHungry()==true ) {
 					//System.exit(0); //TEST
-					
+
 					//TODO - set appropriate location for pred to move toward prey
 					predAn.setDestination(preyAn.getXCoord(), preyAn.getYCoord(), timeStepPartitions);
 				}

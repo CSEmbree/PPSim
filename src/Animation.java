@@ -34,30 +34,15 @@ public class Animation extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Animal animal = (Animal) o;
-		// if(animal.getLifeStatus() == true)
-		// {
-		// 	repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
-		// }
-		// else
-		// {
-		// 	//repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
-		// 	repaint();
-		// }
+		repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
 
-			repaint((int) animal.getXCoord(), (int) animal.getYCoord(), 10, 10);
-			frame.invalidate();
-			frame.validate();
-			frame.repaint();
 	}
 
 	//Used to add the initial components for GUI. Adds the number of Prey/Predators on Grid
 	public void paintComponent(Graphics g) {
-		g.clearRect(0,0,getWidth(),getHeight());
-		frame.revalidate();
+
 		//frame.setSize((int)X_SIZE, (int)Y_SIZE);
-		frame.invalidate();
-		frame.validate();
-		frame.repaint();
+
 		//frame.pack();
 		super.paintComponent(g);
 		setSize((int)X_SIZE, (int)Y_SIZE);
@@ -67,30 +52,20 @@ public class Animation extends JPanel implements Observer {
 			g.setColor(Color.red);
 			g.fillOval((int) predators.getXCoord(), (int) predators.getYCoord(),
 					10, 10); //Sets size of GUI Representations of Predators
-			frame.invalidate();
-			frame.validate();
 		}
 
 		for (Animal prey : simulation.prey) {
 			Color color = Color.getHSBColor(255, 204, 0); // Color for Prey - Yellow 
 			g.setColor(Color.green);
 			g.fillOval((int) prey.getXCoord(), (int) prey.getYCoord(), 10, 10); //Sets size of GUI Representations of Prey
-			frame.invalidate();
-			frame.validate();
 		}
 		for(Animal dead : simulation.deadAnimals)
 		{
 			Color color = Color.getHSBColor(255, 0, 0); // Color for Prey - Yellow 
 			g.setColor(Color.black);
 			g.fillOval((int) dead.getXCoord(), (int) dead.getYCoord(), 10, 10); //Sets size of GUI Representations of Dead Animals
-			frame.invalidate();
-			frame.validate();
 		}
-		frame.revalidate();
-		//frame.setSize((int)X_SIZE, (int)Y_SIZE);
-		frame.invalidate();
-		frame.validate();
-		frame.repaint();
+
 		//frame.pack();
 		
 	}
