@@ -40,8 +40,7 @@ public class PPModel extends SimActor {
 			this.setXSize(xSize);
 		}
 		else {
-			System.out
-					.println("PPModel::PPModel: ERROR: An invalid value for xSize= "
+			System.out.println("PPModel::PPModel: ERROR: An invalid value for xSize= "
 							+ xSize + " was enountered. xSize must be >= 1.");
 			System.exit(0); // exit gracefully on error
 		}
@@ -50,8 +49,7 @@ public class PPModel extends SimActor {
 			this.setYSize(ySize);
 		}
 		else {
-			System.out
-					.println("PPModel::PPModel: ERROR: An invalid value for ySize= "
+			System.out.println("PPModel::PPModel: ERROR: An invalid value for ySize= "
 							+ ySize + " was enountered. xSize must be >= 1.");
 			System.exit(0); // exit gracefully on error
 		}
@@ -72,7 +70,7 @@ public class PPModel extends SimActor {
 			String predSpecies = "great white";
 			energy = 100.0;
 			visionRange = 50.0; //how far a predator can see for prey
-			maxDistTravel = 50.0; //predators cannot move any farther than this <------------
+			maxDistTravel = 75.0; //predators cannot move any farther than this <------------
 			xPos = rand.nextInt((int) xSize);
 			yPos = rand.nextInt((int) ySize);
 
@@ -129,8 +127,7 @@ public class PPModel extends SimActor {
 	}
 
 	public void cleanAndPlan(double timeStepPartitions) {
-		System.out
-				.println("PPModel::cleanAndPlan: Cleaning updating any dead actors and deciding their next move");
+		System.out.println("PPModel::cleanAndPlan: Cleaning updating any dead actors and deciding their next move");
 		boolean removed;
 		Animal deadAnimal;
 
@@ -245,6 +242,11 @@ public class PPModel extends SimActor {
 			for (Animal preyAn : prey) {
 				if( predAn.canSee(preyAn) && preyAn.getLifeStatus()==true && predAn.isHungry()==true ) {
 					//System.exit(0); //TEST
+					
+					if( predAn.inConsumptionRange(preyAn) ) {
+						predAn.consume(preyAn);
+						preyAn.setIsComsumed();
+					}
 
 					//TODO - set appropriate location for pred to move toward prey
 					predAn.setDestination(preyAn.getXCoord(), preyAn.getYCoord(), timeStepPartitions);

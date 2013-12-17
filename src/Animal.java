@@ -1,7 +1,6 @@
 //Cameron Embree, Gradon Faulkner
 import java.util.Random;
 
-
 public class Animal extends SimActor
 {
 	final double FULL = 100.0;
@@ -130,7 +129,7 @@ public class Animal extends SimActor
 	}
 	
 	public boolean determineLife(double energy) {
-		if(this.energy > 0)
+		if(this.energy > 0.0)
 			return true; //alive
 		else
 			return false; //dead
@@ -183,6 +182,16 @@ public class Animal extends SimActor
 		updateLifeStatus();
 	}
 	
+	public boolean inConsumptionRange(Animal otherAn) {
+		boolean isConsumptionRange = false;
+		
+		if( this.distance(this.getXCoord(), this.getYCoord(), otherAn.getXCoord(), otherAn.getYCoord()) <= 20.0 ) { //TODO - dont make hardcoded
+			isConsumptionRange = true;
+		}
+		
+		return isConsumptionRange;
+	}
+	
 	//TODO - balance energy removal based on distance traveled
 	//currently - every 10 units is 1 energy
 	public double removeEnergyFromTravel(double distTravel) {
@@ -207,6 +216,23 @@ public class Animal extends SimActor
 		else {
 			return false;
 		}
+	}
+	
+	private double getConsumptionEnergy() {
+		return this.getEnergy()*0.50; //TODO - Set appropriate energy consumption amount
+	}
+	
+	public void consume(Animal otherAn) {
+		this.addEnergy(otherAn.getConsumptionEnergy());
+	}
+	
+	private void addEnergy(double energy) {
+		double newEnergy = this.getEnergy() + energy;
+		setEnergy(newEnergy);
+	}
+	
+	public void setIsComsumed() {
+		this.setEnergy(0.0);
 	}
 	
 	private void setVisionRange(double visionRange) {

@@ -1,8 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,8 +9,8 @@ import javax.swing.JPanel;
 
 
 public class Animation extends JPanel implements Observer {
-	static final double X_SIZE = 500.0;
-	static final double Y_SIZE = 500.0;
+	static final double X_SIZE = 300.0;
+	static final double Y_SIZE = 300.0;
 	static final int SIM_DURATION = 20;
 	JFrame frame = new JFrame();
 	PPModel simulation;
